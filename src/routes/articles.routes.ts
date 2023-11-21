@@ -35,11 +35,5 @@ export class ArticleRoute implements Routes {
       AuthMiddleware,
       this.article.deleteArticle
     )
-
-    // TODO - COMMENTS
-    this.router.get(`/v1/${this.path}/comments/:comment_id`, this.article.getArticlesByCategory);
-    this.router.post(`/v1/${this.path}/comments/`, this.article.getArticlesByCategory); // TODO -- CreateDTO, Create Comments
-    this.router.put(`/v1/${this.path}/comments/`, this.article.getArticlesByCategory); // TODO -- UpdateDTO, Update Comments
-    this.router.delete(`/v1/${this.path}/comments/:comment_id`, this.article.getArticlesByCategory); // TODO -- Delete Comments
   }
 }
