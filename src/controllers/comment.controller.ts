@@ -2,13 +2,11 @@ import { Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 import { Container } from "typedi";
 
-import { Article, ArticleParsed, ArticleQueryParams } from "@interfaces/article.interface";
 import { RequestWithUser } from "@interfaces/authentication/token.interface";
-import { ArticleService } from "@services/articles.service";
 
-// Import 
 import { Comment, CommentParsed } from "@interfaces/comment.interface";
 import { CommentService } from "@services/comments.service";
+import { CreateCommentDto, UpdateCommentDto } from "@/dtos/comment.dto";
 
 import { apiResponse } from "@utils/apiResponse";
 
@@ -20,10 +18,16 @@ export class CommentController {
     res.status(200).json(apiResponse(200, "OK", "Get Comment Success", response.comments));
   });
 
+  public getCommentById = asyncHandler(async (req: RequestWithUser, res: Response, next: NextFunction) => {
+    const { comment_id } = req.params;
+    const response = await this.comment.getCommentById(comment_id);
+    res.status(200).json(apiResponse(200, "OK", "Get Comment Success", response));
+  });
+
   public createComment = asyncHandler(async (req: RequestWithUser, res: Response, next: NextFunction) => {
     const { article_id } = req.params;
     const author_id = req.user.pk;
-    const data = req.body;
+    const data = req.body;  
     const response = await this.comment.createComment(article_id, author_id, data);
     res.status(200).json(apiResponse(200, "OK", "Create Comment Success", response));
   });

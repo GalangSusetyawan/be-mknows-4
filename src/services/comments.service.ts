@@ -2,13 +2,12 @@ import { Op } from "sequelize";
 import { Service } from "typedi";
 import { DB } from "@database";
 
-import { ArticleModel } from "@models/articles.model";
-
 import { ArticlesCommentsModel } from "@/models/articles_comments.model";
 
 import { ArticleParsed, ArticleQueryParams } from "@interfaces/article.interface";
 import { Pagination } from "@interfaces/common/pagination.interface";
 import { CreateArticleDto, UpdateArticleDto } from "@dtos/articles.dto";
+import { CreateCommentDto, UpdateCommentDto } from "@/dtos/comment.dto";
 import { HttpException } from "@exceptions/HttpException";
 import { CommentParsed } from "@/interfaces/comment.interface";
 
@@ -25,7 +24,7 @@ export class CommentService {
     };
   }
 
-  public async getCommentById(commentId: number): Promise<CommentParsed> {
+  public async getCommentById(commentId: string): Promise<CommentParsed> {
     const comment = await DB.ArticlesComments.findOne({ where: { pk: commentId } });
 
     if (!comment) {
